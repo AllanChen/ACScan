@@ -11,8 +11,8 @@ Pod::Spec.new do |s|
   s.license       = "MIT (example)"
   s.author        = { "Allan" => "cyjian0@gmail.com" }
   s.source        = { :git => "https://github.com/AllanChen/ACScan.git", :tag => "0.0.1" }
-  s.source_files    = "WeChatScan", "WeChatScan/**/*.{h,m,mm,c}", "Helper", "WeChatScan/**/*.{h,m,mm,c}"
-  
+  s.source_files  = "WeChatScan", "WeChatScan/**/*.{h,m,mm,c.xib}", "Helper", "WeChatScan/**/*.{h,m,mm,c.xib}"
+  s.resources     = "WeChatScan/Resource/*.png"
   s.dependency "Masonry"
   s.dependency "ZXingObjC", "~> 3.1.0"
   s.dependency "MBProgressHUD", "~> 0.9.2"
