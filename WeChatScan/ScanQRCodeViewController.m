@@ -23,13 +23,17 @@
 
 @interface ScanQRCodeViewController ()
 {
-    float _scanViewWidth;
-    QRScanView *_scanView;
-    UILabel *_detailLab;
+    float       _scanViewWidth;
+    
+    UILabel     *_detailLab;
+    UILabel     *_faileQRCodeLab;
+    UILabel     *_openCameraLab;
+    UIButton    *_leftBtn;
+    UIButton    *_rightBtn;
     UIImageView *_lineImage;
-    UILabel *_faileQRCodeLab;
-    UILabel *_openCameraLab;
+    
     MBProgressHUD *_mbHUD;
+    QRScanView  *_scanView;
 }
 
 @property (strong, nonatomic) AVCaptureDevice* device;
@@ -89,7 +93,7 @@
             }];
         }
     }
-
+    
 }
 
 - (void)setupView{
@@ -110,6 +114,14 @@
     _faileQRCodeLab.font = [UIFont fontWithName:@"Arial" size:16.0f];
     _faileQRCodeLab.hidden = YES;
     
+    _leftBtn = [[UIButton alloc] init];
+    _rightBtn = [[UIButton alloc] init];
+    
+    [_leftBtn setImage:[UIImage imageNamed:@"icon 4"] forState:UIControlStateNormal];
+    [_rightBtn setImage:[UIImage imageNamed:@"icon 3"] forState:UIControlStateNormal];
+    [_leftBtn addTarget:self action:@selector(outScanQRCodeVC:) forControlEvents:UIControlEventTouchUpInside];
+    [_rightBtn addTarget:self action:@selector(pickupTheQRCodeFromLib) forControlEvents:UIControlEventTouchUpInside];
+    
     _scanView = [[QRScanView alloc] init];
     
     [self setupAlphaLayer];
@@ -117,18 +129,30 @@
     [self scanLineSetup];
     [self startScanning];
     
+    
     [self.view addSubview:_scanView];
-    [self.view addSubview:self.pictureBtn];
-    [self.view addSubview:self.outBtn];
     [self.view addSubview:_detailLab];
     [self.view addSubview:_lineImage];
     [self.view addSubview:_faileQRCodeLab];
-    
+    [self.view addSubview:_leftBtn];
+    [self.view addSubview:_rightBtn];
     
     _mbHUD = [[MBProgressHUD alloc] initWithView:self.view];
     _mbHUD.mode = MBProgressHUDModeIndeterminate;
     _mbHUD.labelText = @"正在识别二维码";
     [self.view addSubview:_mbHUD];
+    
+    [_leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(@25);
+        make.left.mas_equalTo(@20);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
+    }];
+    
+    [_rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_leftBtn.mas_centerY);
+        make.right.equalTo(self.view.mas_right).offset(-20);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
+    }];
     
     [_detailLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo((ScreenHeight + _scanViewWidth)*0.5 + 5);
@@ -217,7 +241,7 @@
 }
 
 - (void)isAllowUseCamera{
-    }
+}
 
 - (void)startScanning;
 {
@@ -266,7 +290,7 @@
 
 
 #pragma mark 从用户相册获取活动图片
-- (IBAction)pickupTheQRCodeFromLib:(id)sender{
+- (void)pickupTheQRCodeFromLib{
     ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
     if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
         UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请您设置允许云导播访问您的相册\n设置>隐私>照片" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];

@@ -12,8 +12,7 @@ Pod::Spec.new do |s|
   s.author        = { "Allan" => "cyjian0@gmail.com" }
   s.source        = { :git => "https://github.com/AllanChen/ACScan.git", :tag => "0.0.1" }
   s.source_files  = "WeChatScan", "WeChatScan/**/*.{h,m,mm,c,xib}","WeChatScan/**/*.{h,m,mm,c,xib}"
-  s.resources     = ["WeChatScan/Resource/*.png","WeChatScan/ScanQRCodeViewController.xib"]
-  s.resource      = ["WeChatScan/ScanQRCodeViewController.xib"]
+  s.resource      = ["WeChatScan/ScanQRCodeViewController.xib,WeChatScan/Resource/*.png"]
   s.dependency "Masonry"
   s.dependency "ZXingObjC", "~> 3.1.0"
   s.dependency "MBProgressHUD", "~> 0.9.2"

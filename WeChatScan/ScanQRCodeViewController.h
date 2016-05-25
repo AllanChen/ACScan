@@ -12,7 +12,5 @@
 
 @protocol ScanQRCodeViewControllerDelegate;
 @interface ScanQRCodeViewController : UIViewController<AVCaptureMetadataOutputObjectsDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *outBtn;
-@property (weak, nonatomic) IBOutlet UIButton *pictureBtn;
 @end
 
